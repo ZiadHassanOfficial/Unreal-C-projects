@@ -1,4 +1,4 @@
-# Unreal Engine
+# Unreal Engine generated files
 Binaries/
 DerivedDataCache/
 Intermediate/
@@ -21,6 +21,6 @@ Saved/
 # JetBrains Rider
 .idea/
 
-# Operating System
+# OS
 .DS_Store
 Thumbs.db
