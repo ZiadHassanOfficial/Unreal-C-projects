@@ -18,13 +18,16 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
+	void UpdateCurrentInteractable();
+	bool PerformInteractionTrace(FHitResult& OutHitResult) const;
 
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	void Move(const FVector2D& MovemntInput);
+
+
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
@@ -49,6 +52,10 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = "Interaction")
 	float InteractionTraceDistance = 300.0f;
+
+	UPROPERTY(BlueprintReadOnly)
+	TObjectPtr<class AInteractableActor> CurrentInteractable = nullptr;
+
 
 
 };

@@ -5,6 +5,8 @@
 #include "Camera/CameraComponent.h"
 #include "GameFramework/FloatingPawnMovement.h"
 #include "Components/ArrowComponent.h"
+#include "Gameplay/InteractableActor.h"
+
 // Sets default values
 AMyPawn::AMyPawn()
 {
@@ -57,3 +59,65 @@ void AMyPawn::Move(const FVector2D& MovementInput)
 	AddMovementInput(GetActorRightVector(), MovementInput.X);
 
 }
+
+bool AMyPawn::PerformInteractionTrace(FHitResult& OutHitResult) const
+{
+	FVector StartPoint = CameraComp->GetComponentLocation();
+	FVector EndPoint = StartPoint + (CameraComp->GetForwardVector() * InteractionTraceDistance);
+	FCollisionQueryParams Params;
+	Params.AddIgnoredActor(this); // Ignore the pawn itself
+
+	const bool bHit = GetWorld()->LineTraceSingleByChannel(OutHitResult, StartPoint, EndPoint, ECollisionChannel::ECC_Visibility, Params);
+	return bHit;
+}
+
+void AMyPawn::UpdateCurrentInteractable()
+{
+	FHitResult HitResult;
+	AInteractableActor* NewInteractable = nullptr;
+	if (PerformInteractionTrace(HitResult)) {
+		NewInteractable = Cast<AInteractableActor>(HitResult.GetActor());
+		if (CurrentInteractable == NewInteractable) {
+			return; // No change in interactable
+		}
+		if (CurrentInteractable) {
+			CurrentInteractable->HideInteractionWidget();
+		}
+		CurrentInteractable = NewInteractable;
+		if (NewInteractable) {
+			NewInteractable->ShowInteractionWidget();
+		}
+	}
+}
+
+/*void AMyPawn::UpdateCurrentInteractable()
+{
+	FHitResult HitResult;
+	FVector StartPoint = CameraComp->GetComponentLocation();
+	FVector EndPoint = StartPoint + (CameraComp->GetForwardVector() * InteractionTraceDistance);
+	FCollisionQueryParams Params;
+	Params.AddIgnoredActor(this); // Ignore the pawn itself
+	if (GetWorld()->LineTraceSingleByChannel(HitResult, StartPoint, EndPoint, ECollisionChannel::ECC_Visibility, Params)) {
+
+		if (AInteractableActor* DetectedInteractable = Cast<AInteractableActor>(HitResult.GetActor())) {
+
+			if (CurrentInteractable == DetectedInteractable)
+			{
+				return;
+			}
+			CurrentInteractable->HideInteractionWidget();
+			CurrentInteractable = DetectedInteractable;
+			DetectedInteractable->ShowInteractionWidget();
+		}
+		else if (CurrentInteractable) {
+			CurrentInteractable->HideInteractionWidget();
+			CurrentInteractable = nullptr;
+		}
+	}
+	else if (CurrentInteractable) {
+		CurrentInteractable->HideInteractionWidget();
+		CurrentInteractable = nullptr;
+	}
+}*/
+
+
