@@ -75,3 +75,11 @@ void AInteractableActor::HideInteractionWidget()
         WidgetComponent->SetComponentTickEnabled(false);
 		});
 }
+
+
+void AInteractableActor::PerformAction()
+{   
+    // Implement the specific action for this interactable actor
+    UE_LOG(LogTemp, Log, TEXT("Interacted with: %s"), *InteractableName);
+    GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Green, "Interacted with " + InteractableName);
+}

@@ -14,7 +14,7 @@ class PROJECTSC_API AMyPlayerController : public APlayerController
     GENERATED_BODY()
 
 protected:
-
+    void Interact(const FInputActionInstance& Instance);
     virtual void BeginPlay() override;
 
     virtual void SetupInputComponent() override;
@@ -23,7 +23,7 @@ protected:
 
     void Look(const FInputActionValue& Instance);
 
-    void Interact(const FInputActionValue& Instance);
+protected:
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input")
     TObjectPtr<UInputMappingContext> DefaultMappingContext = nullptr;
@@ -39,4 +39,6 @@ protected:
 
     UPROPERTY()
     TObjectPtr<AMyPawn> ControlledPawn = nullptr;
+
+
 };

@@ -15,11 +15,15 @@ public:
 	// Sets default values for this pawn's properties
 	AMyPawn();
 
+	void TryInteract();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	void UpdateCurrentInteractable();
 	bool PerformInteractionTrace(FHitResult& OutHitResult) const;
+	
+
 
 public:
 	// Called every frame

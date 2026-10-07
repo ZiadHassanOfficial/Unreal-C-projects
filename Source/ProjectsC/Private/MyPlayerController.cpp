@@ -47,9 +47,9 @@ void AMyPlayerController::Look(const FInputActionValue& Instance)
 }
 
 
-void AMyPlayerController::Interact(const FInputActionValue& Instance)
+void AMyPlayerController::Interact(const FInputActionInstance& Instance)
 {
-    // Interaction logic goes here.
+    ControlledPawn->TryInteract();
 }
 
 
@@ -84,8 +84,7 @@ void AMyPlayerController::SetupInputComponent()
             &AMyPlayerController::Look
         );
     }
-
-    if (InteractAction)
+    if( InteractAction)
     {
         Input->BindAction(
             InteractAction,
@@ -93,5 +92,10 @@ void AMyPlayerController::SetupInputComponent()
             this,
             &AMyPlayerController::Interact
         );
-    }
+	}
 }
+   
+
+
+    
+    

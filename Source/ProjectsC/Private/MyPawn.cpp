@@ -89,6 +89,14 @@ void AMyPawn::UpdateCurrentInteractable()
 		}
 	}
 }
+void AMyPawn::TryInteract()
+{
+	if (CurrentInteractable) {
+		CurrentInteractable->PerformAction();
+	}
+}
+
+
 
 /*void AMyPawn::UpdateCurrentInteractable()
 {

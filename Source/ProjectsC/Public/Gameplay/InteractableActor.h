@@ -22,7 +22,7 @@ public:
 	void PerformAction();
 	void ShowInteractionWidget();
 	void HideInteractionWidget();
-
+	void trytoInteract(AActor* InteractingActor);
 
 protected:
 
@@ -56,6 +56,8 @@ protected:
 
 public:
 
-	// Called when the actor should face the player
+	
+	
+
 	
 };
